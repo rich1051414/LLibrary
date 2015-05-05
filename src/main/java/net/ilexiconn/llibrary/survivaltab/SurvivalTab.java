@@ -19,7 +19,8 @@ public class SurvivalTab
      */
     public int getTabColumn()
     {
-        if (tabIndex > 11) return ((tabIndex - 12) % 10) % 5;
+        if (tabIndex > 11)
+            return ((tabIndex - 12) % 10) % 5;
         return tabIndex % 6;
     }
 
@@ -28,7 +29,8 @@ public class SurvivalTab
      */
     public boolean isTabInFirstRow()
     {
-        if (tabIndex > 11) return ((tabIndex - 12) % 10) < 5;
+        if (tabIndex > 11)
+            return ((tabIndex - 12) % 10) < 5;
         return tabIndex < 6;
     }
 

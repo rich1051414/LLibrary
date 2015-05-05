@@ -4,7 +4,7 @@ import net.minecraft.entity.Entity;
 
 /**
  * Placeholder class for registering entities using the EntityHelper class.
- *
+ * 
  * @author iLexiconn
  */
 public class EntityObject

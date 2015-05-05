@@ -1,16 +1,16 @@
 package net.ilexiconn.llibrary.potion;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.HashMap;
+import java.util.Map;
+
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionHelper;
 import net.minecraft.util.ResourceLocation;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.HashMap;
-import java.util.Map;
 
 public class PotionAPI
 {
@@ -48,8 +48,8 @@ public class PotionAPI
 
         potion = PotionAPI.createPotion("test", 100, true, 43789, new ResourceLocation("llibrary", "textures/potion/test.png"), 0, 0);
 
-        HashMap potionRequirements = getField(HashMap.class, PotionHelper.class, "potionRequirements");
-        HashMap potionAmplifiers = getField(HashMap.class, PotionHelper.class, "potionAmplifiers");
+        HashMap<Integer, String> potionRequirements = getField(HashMap.class, PotionHelper.class, "potionRequirements");
+        HashMap<Integer, String> potionAmplifiers = getField(HashMap.class, PotionHelper.class, "potionAmplifiers");
         Map potionList = getField(Map.class, ItemPotion.class, "field_77835_b");
 
         potionRequirements.put(100, "!0 & 1 & !2 & !3 & 1+6");

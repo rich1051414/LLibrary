@@ -1,10 +1,11 @@
 package net.ilexiconn.llibrary.update;
 
-import com.google.common.collect.Lists;
-import net.ilexiconn.llibrary.web.WebHelper;
-
 import java.io.IOException;
 import java.util.List;
+
+import net.ilexiconn.llibrary.web.WebHelper;
+
+import com.google.common.collect.Lists;
 
 public class VersionHandler
 {

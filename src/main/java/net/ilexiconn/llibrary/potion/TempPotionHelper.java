@@ -1,13 +1,18 @@
 package net.ilexiconn.llibrary.potion;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.*;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 public class TempPotionHelper
 {
@@ -136,7 +141,7 @@ public class TempPotionHelper
     public static int getPotionLiquidColor(int damageValue, boolean isInstant)
     {
         /**
-         * Given a {@link java.util.Collection}<{@link net.minecraft.potion.PotionEffect}> will return an Integer color.
+         * Given a {@link java.util.Collection}< {@link net.minecraft.potion.PotionEffect}> will return an Integer color.
          */
         if (!isInstant)
         {
@@ -456,9 +461,7 @@ public class TempPotionHelper
     }
 
     /**
-     * Does bit operations for brewPotionData, given data, the index of the bit being operated upon, whether the bit
-     * will be removed, whether the bit will be toggled (NOT), or whether the data field will be set to 0 if the bit is
-     * not present.
+     * Does bit operations for brewPotionData, given data, the index of the bit being operated upon, whether the bit will be removed, whether the bit will be toggled (NOT), or whether the data field will be set to 0 if the bit is not present.
      */
     private static int brewBitOperations(int id, int flagIndex, boolean hasMinus, boolean hasExclamation, boolean hasAmpersAnd)
     {
@@ -493,8 +496,7 @@ public class TempPotionHelper
     }
 
     /**
-     * Generate a data value for a potion, given its previous data value and the encoded string of new effects it will
-     * receive
+     * Generate a data value for a potion, given its previous data value and the encoded string of new effects it will receive
      */
     public static int applyIngredient(int previousDamage, String ingredientEffectCode)
     {
@@ -622,9 +624,6 @@ public class TempPotionHelper
         netherWartEffect = "+4";
 
         cachedLiquidColors = Maps.newHashMap();
-        potionPrefixes = new String[]{"potion.prefix.mundane", "potion.prefix.uninteresting", "potion.prefix.bland", "potion.prefix.clear", "potion.prefix.milky", "potion.prefix.diffuse", "potion.prefix.artless", "potion.prefix.thin",
-                "potion.prefix.awkward", "potion.prefix.flat", "potion.prefix.bulky", "potion.prefix.bungling", "potion.prefix.buttered", "potion.prefix.smooth", "potion.prefix.suave", "potion.prefix.debonair", "potion.prefix.thick",
-                "potion.prefix.elegant", "potion.prefix.fancy", "potion.prefix.charming", "potion.prefix.dashing", "potion.prefix.refined", "potion.prefix.cordial", "potion.prefix.sparkling", "potion.prefix.potent", "potion.prefix.foul",
-                "potion.prefix.odorless", "potion.prefix.rank", "potion.prefix.harsh", "potion.prefix.acrid", "potion.prefix.gross", "potion.prefix.stinky"};
+        potionPrefixes = new String[] { "potion.prefix.mundane", "potion.prefix.uninteresting", "potion.prefix.bland", "potion.prefix.clear", "potion.prefix.milky", "potion.prefix.diffuse", "potion.prefix.artless", "potion.prefix.thin", "potion.prefix.awkward", "potion.prefix.flat", "potion.prefix.bulky", "potion.prefix.bungling", "potion.prefix.buttered", "potion.prefix.smooth", "potion.prefix.suave", "potion.prefix.debonair", "potion.prefix.thick", "potion.prefix.elegant", "potion.prefix.fancy", "potion.prefix.charming", "potion.prefix.dashing", "potion.prefix.refined", "potion.prefix.cordial", "potion.prefix.sparkling", "potion.prefix.potent", "potion.prefix.foul", "potion.prefix.odorless", "potion.prefix.rank", "potion.prefix.harsh", "potion.prefix.acrid", "potion.prefix.gross", "potion.prefix.stinky" };
     }
 }

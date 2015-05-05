@@ -1,10 +1,13 @@
 package net.ilexiconn.llibrary.client.gui;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.io.IOException;
+
 import net.ilexiconn.llibrary.update.ModUpdateContainer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -40,7 +43,7 @@ public class GuiChangelog extends GuiScreen
         }
     }
 
-    protected void keyTyped(char character, int par2)
+    protected void keyTyped(char character, int par2) throws IOException
     {
         super.keyTyped(character, par2);
     }

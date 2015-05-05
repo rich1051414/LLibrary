@@ -1,8 +1,8 @@
 package net.ilexiconn.llibrary.client.model.tabula;
 
-import com.google.common.collect.Lists;
-
 import java.util.ArrayList;
+
+import com.google.common.collect.Lists;
 
 /**
  * @author iChun
@@ -20,4 +20,3 @@ public class CubeGroup
 
     public String identifier;
 }
-

@@ -1,14 +1,15 @@
 package net.ilexiconn.llibrary.update;
 
-import com.google.common.collect.Lists;
-import cpw.mods.fml.common.Mod;
-
 import java.net.URL;
 import java.util.ArrayList;
 
+import net.minecraftforge.fml.common.Mod;
+
+import com.google.common.collect.Lists;
+
 /**
  * Helper class to register a mod for automatic update checking.
- *
+ * 
  * @author FiskFille
  */
 public class UpdateHelper
@@ -20,13 +21,14 @@ public class UpdateHelper
      * <p/>
      * Example pastebin version file:
      * <p/>
-     * fiskutils|:1.0.1
-     * fiskutilsLog|1.0.0:* Released mod.
-     * fiskutilsLog|1.0.1:* Updated to 1.7.10.
-     *
-     * @param mod        the main mod instance
-     * @param pastebinId the paste id
-     * @param website    the update website
+     * fiskutils|:1.0.1 fiskutilsLog|1.0.0:* Released mod. fiskutilsLog|1.0.1:* Updated to 1.7.10.
+     * 
+     * @param mod
+     *            the main mod instance
+     * @param pastebinId
+     *            the paste id
+     * @param website
+     *            the update website
      */
     public static void registerUpdateChecker(Object mod, String pastebinId, String website)
     {
@@ -34,7 +36,8 @@ public class UpdateHelper
 
         Class<?> modClass = mod.getClass();
 
-        if (!modClass.isAnnotationPresent(Mod.class)) return;
+        if (!modClass.isAnnotationPresent(Mod.class))
+            return;
 
         Mod annotation = modClass.getAnnotation(Mod.class);
 

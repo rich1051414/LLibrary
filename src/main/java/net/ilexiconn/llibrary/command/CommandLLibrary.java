@@ -1,6 +1,9 @@
 package net.ilexiconn.llibrary.command;
 
-import com.google.common.collect.Lists;
+import java.awt.Desktop;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.ilexiconn.llibrary.LLibrary;
 import net.ilexiconn.llibrary.color.EnumChatColor;
 import net.ilexiconn.llibrary.update.ChangelogHandler;
@@ -12,13 +15,11 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.util.EnumChatFormatting;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
+import com.google.common.collect.Lists;
 
 public class CommandLLibrary extends CommandBase
 {
-    public String getCommandName()
+    public String getName()
     {
         return "llibrary";
     }
@@ -33,7 +34,7 @@ public class CommandLLibrary extends CommandBase
         return 0;
     }
 
-    public void processCommand(ICommandSender sender, String[] args)
+    public void execute(ICommandSender sender, String[] args) throws WrongUsageException
     {
         String title = "[LLibHelper]" + EnumChatFormatting.YELLOW + " ";
         List<ModUpdateContainer> outdatedMods = VersionHandler.getOutdatedMods();
@@ -141,15 +142,15 @@ public class CommandLLibrary extends CommandBase
         {
             if (astring[0].equalsIgnoreCase("update") && astring.length == 2)
             {
-                return getListOfStringsFromIterableMatchingLastWord(astring, getAllModIDs(VersionHandler.getOutdatedMods()));
+                return getListOfStringsMatchingLastWord(astring, (String[]) getAllModIDs(VersionHandler.getOutdatedMods()).toArray());
             }
             if (astring[0].equalsIgnoreCase("changelog") && astring.length == 2)
             {
-                return getListOfStringsFromIterableMatchingLastWord(astring, getAllModIDs(UpdateHelper.modList));
+                return getListOfStringsMatchingLastWord(astring, (String[]) getAllModIDs(UpdateHelper.modList).toArray());
             }
             if (astring[0].equalsIgnoreCase("changelog") && astring.length == 3)
             {
-                return getListOfStringsFromIterableMatchingLastWord(astring, getAllModChangelogs(UpdateHelper.getModContainerById(astring[1])));
+                return getListOfStringsMatchingLastWord(astring, (String[]) getAllModChangelogs(UpdateHelper.getModContainerById(astring[1])).toArray());
             }
         }
         return null;

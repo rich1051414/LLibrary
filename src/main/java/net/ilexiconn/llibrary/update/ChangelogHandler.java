@@ -1,10 +1,10 @@
 package net.ilexiconn.llibrary.update;
 
-import com.google.common.collect.Lists;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import com.google.common.collect.Lists;
 
 public class ChangelogHandler
 {

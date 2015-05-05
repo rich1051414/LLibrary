@@ -1,5 +1,8 @@
 package net.ilexiconn.llibrary.item;
 
+import java.util.Iterator;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -7,12 +10,9 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 
-import java.util.Iterator;
-import java.util.List;
-
 /**
  * Helper class to save ItemStacks to NBT, and removing item/block recipes.
- *
+ * 
  * @author iLexiconn
  */
 public class ItemHelper
@@ -40,7 +40,8 @@ public class ItemHelper
         while (iterator.hasNext())
         {
             ItemStack stack = iterator.next().getRecipeOutput();
-            if (stack != null && stack.getItem() == item) iterator.remove();
+            if (stack != null && stack.getItem() == item)
+                iterator.remove();
         }
     }
 }

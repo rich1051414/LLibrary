@@ -1,13 +1,13 @@
 package net.ilexiconn.llibrary.json;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
+
 import net.ilexiconn.llibrary.entity.multipart.EntityPart;
 import net.ilexiconn.llibrary.json.container.JsonHitbox;
 import net.ilexiconn.llibrary.json.container.JsonTabulaModel;
 import net.minecraft.entity.EntityLivingBase;
-
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.List;
 
 public class JsonHelper
 {
@@ -19,7 +19,8 @@ public class JsonHelper
     public static EntityPart[] parseHitboxList(EntityLivingBase parent, JsonHitbox[] hitbox)
     {
         EntityPart[] list = new EntityPart[hitbox.length];
-        for (int i = 0; i < hitbox.length; i++) list[i] = parseHitbox(parent, hitbox[i]);
+        for (int i = 0; i < hitbox.length; i++)
+            list[i] = parseHitbox(parent, hitbox[i]);
         return list;
     }
 

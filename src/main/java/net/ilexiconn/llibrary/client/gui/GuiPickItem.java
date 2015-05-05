@@ -1,8 +1,9 @@
 package net.ilexiconn.llibrary.client.gui;
 
-import com.google.common.collect.Lists;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockMobSpawner;
@@ -22,12 +23,14 @@ import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.common.collect.Lists;
 
 /**
  * @author FiskFille
@@ -38,7 +41,7 @@ public abstract class GuiPickItem extends GuiScreen
     public String title;
     private GuiTextField textField;
     public GuiVerticalSlider slider = new GuiVerticalSlider(100, 0, 12, 15, 300, 10);
-    private RenderItem renderItem = new RenderItem();
+    private RenderItem renderItem = mc.getRenderItem();
     private ArrayList<ItemStack> items = Lists.newArrayList();
 
     public GuiPickItem(String t)
@@ -51,7 +54,7 @@ public abstract class GuiPickItem extends GuiScreen
         int h = scaledresolution.getScaledHeight();
         setWorldAndResolution(mc, w, h);
 
-        textField = new GuiTextField(fontRendererObj, width / 2 - 45, 30, 103, 12);
+        textField = new GuiTextField(0, fontRendererObj, width / 2 - 45, 30, 103, 12);
         textField.setMaxStringLength(40);
 
         for (Item item : (Iterable<Item>) Item.itemRegistry)
@@ -106,7 +109,7 @@ public abstract class GuiPickItem extends GuiScreen
         slider.mouseClickMove(mouseX, mouseY, lastButtonClicked, timeSinceMouseClick);
     }
 
-    protected void mouseClicked(int mouseX, int mouseY, int button)
+    protected void mouseClicked(int mouseX, int mouseY, int button) throws IOException
     {
         slider.mouseClicked(mouseX, mouseY, button);
         textField.mouseClicked(mouseX, mouseY, button);
@@ -124,7 +127,7 @@ public abstract class GuiPickItem extends GuiScreen
         int w = scaledresolution.getScaledWidth();
         int h = scaledresolution.getScaledHeight();
         setWorldAndResolution(mc, w, h);
-        
+
         drawDefaultBackground();
         drawCenteredString(fontRendererObj, title, width / 2, 15, 16777215);
         int x = width / 2 - 45;
@@ -232,8 +235,8 @@ public abstract class GuiPickItem extends GuiScreen
         renderItem.zLevel = 100f;
         GL11.glEnable(2896);
         GL11.glEnable(32826);
-        renderItem.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, itemstack, x, y);
-        renderItem.renderItemOverlayIntoGUI(mc.fontRenderer, mc.renderEngine, itemstack, x, y);
+        renderItem.renderItemAndEffectIntoGUI(itemstack, x, y);
+        renderItem.renderItemOverlayIntoGUI(mc.fontRendererObj, itemstack, x, y, itemstack.getDisplayName());
         GL11.glDisable(2896);
         GL11.glEnable(3042);
         renderItem.zLevel = 0f;
@@ -243,6 +246,6 @@ public abstract class GuiPickItem extends GuiScreen
 
     public void playClickSound(SoundHandler soundHandler)
     {
-        soundHandler.playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1f));
+        soundHandler.playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1f));
     }
 }

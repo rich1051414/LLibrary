@@ -1,8 +1,5 @@
 package net.ilexiconn.llibrary.survivaltab;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.ilexiconn.llibrary.config.ConfigHelper;
 import net.ilexiconn.llibrary.config.LLibraryConfigHandler;
 import net.minecraft.client.Minecraft;
@@ -10,9 +7,14 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
 import org.apache.commons.lang3.math.NumberUtils;
 
 public class SurvivalTabInventory implements ISurvivalTab
@@ -25,10 +27,15 @@ public class SurvivalTabInventory implements ISurvivalTab
     public ItemStack getTabIcon()
     {
         String[] array = LLibraryConfigHandler.survivalInventoryItem.split(":");
-        if (array.length < 2) return resetDefaultStack();
-        ItemStack stack = GameRegistry.findItemStack(array[0], array[1], 1);
-        if (stack == null) return resetDefaultStack();
-        if (array.length == 3) stack.setItemDamage(NumberUtils.toInt(array[2]));
+        if (array.length < 2)
+            return resetDefaultStack();
+        Item item = GameRegistry.findItem(array[0], array[1]);
+        if (item == null)
+            return resetDefaultStack();
+
+        ItemStack stack = new ItemStack(item);
+        if (array.length == 3)
+            stack.setItemDamage(NumberUtils.toInt(array[2]));
 
         return stack;
     }

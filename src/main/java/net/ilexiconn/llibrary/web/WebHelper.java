@@ -1,14 +1,18 @@
 package net.ilexiconn.llibrary.web;
 
-import com.google.common.collect.Lists;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
 
+import com.google.common.collect.Lists;
+
 /**
  * Helper class to parse <a href="http://pastebin.com">Pastebin.com</a> pastes and read files from given URL
- *
+ * 
  * @author Gegy1000, jglrxavpok
  */
 public class WebHelper
@@ -17,10 +21,12 @@ public class WebHelper
 
     /**
      * Downloads the content of a text hosted on <a href="http://pastebin.com">Pastebin.com</a> line by line.
-     *
-     * @param pasteId The ID of the paste
+     * 
+     * @param pasteId
+     *            The ID of the paste
      * @return The lines of the paste as a list
-     * @throws IOException Thrown if there are problems while reading
+     * @throws IOException
+     *             Thrown if there are problems while reading
      */
     public static List<String> readPastebinAsList(String pasteId) throws IOException
     {
@@ -29,10 +35,12 @@ public class WebHelper
 
     /**
      * Downloads the content of a text hosted on <a href="http://pastebin.com">Pastebin.com</a>
-     *
-     * @param pasteId The ID of the paste
+     * 
+     * @param pasteId
+     *            The ID of the paste
      * @return The content of the paste
-     * @throws IOException Thrown if there are problems while reading
+     * @throws IOException
+     *             Thrown if there are problems while reading
      */
     public static String readPastebin(String pasteId) throws IOException
     {
@@ -41,10 +49,12 @@ public class WebHelper
 
     /**
      * Downloads a text file from given URL line by line.
-     *
-     * @param urlString The URL to download from
+     * 
+     * @param urlString
+     *            The URL to download from
      * @return The different lines of the file from first to last
-     * @throws IOException Thrown if there are problems reading the file.
+     * @throws IOException
+     *             Thrown if there are problems reading the file.
      */
     public static List<String> downloadTextFileList(String urlString) throws IOException
     {
@@ -63,10 +73,12 @@ public class WebHelper
 
     /**
      * Downloads a text file from given URL.
-     *
-     * @param urlString The URL to download from
+     * 
+     * @param urlString
+     *            The URL to download from
      * @return The content of the file, as a String
-     * @throws IOException Thrown if there are problems reading the file.
+     * @throws IOException
+     *             Thrown if there are problems reading the file.
      */
     public static String downloadTextFile(String urlString) throws IOException
     {
@@ -85,17 +97,20 @@ public class WebHelper
 
     /**
      * Downloads a file from given URL.
-     *
-     * @param rawURL The URL to download the file from
+     * 
+     * @param rawURL
+     *            The URL to download the file from
      * @return A byte array containing all the content of the file
-     * @throws IOException Thrown in case there are problems reading the file
+     * @throws IOException
+     *             Thrown in case there are problems reading the file
      */
     public static byte[] download(String rawURL) throws IOException
     {
         URL url = new URL(rawURL);
         try (InputStream in = url.openStream(); ByteArrayOutputStream baos = new ByteArrayOutputStream())
         {
-            byte[] buffer = new byte[4096]; // We create a 4kb buffer to download the file
+            byte[] buffer = new byte[4096]; // We create a 4kb buffer to
+                                            // download the file
             int i;
             while ((i = in.read(buffer)) != -1)
             {

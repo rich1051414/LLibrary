@@ -1,9 +1,9 @@
 package net.ilexiconn.llibrary.update;
 
-import com.google.common.collect.Lists;
-
 import java.net.URL;
 import java.util.List;
+
+import com.google.common.collect.Lists;
 
 public class ModUpdateContainer
 {

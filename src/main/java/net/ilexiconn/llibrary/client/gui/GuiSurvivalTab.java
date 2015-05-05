@@ -1,7 +1,8 @@
 package net.ilexiconn.llibrary.client.gui;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.Arrays;
+import java.util.List;
+
 import net.ilexiconn.llibrary.survivaltab.SurvivalTab;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
@@ -12,16 +13,16 @@ import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.Arrays;
-import java.util.List;
+import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class GuiSurvivalTab extends GuiButton
 {
     private ResourceLocation texture = new ResourceLocation("textures/gui/container/creative_inventory/tabs.png");
-    private RenderItem renderItem = new RenderItem();
+    private RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
     private SurvivalTab survivalTabContainer;
     private ItemStack stackIcon;
 
@@ -41,7 +42,8 @@ public class GuiSurvivalTab extends GuiButton
             boolean selected = mc.currentScreen.getClass() != survivalTabContainer.getSurvivalTab().getContainerGuiClass();
             xPosition = (mc.currentScreen.width / 2) - 88 + survivalTabContainer.getTabColumn() * 29;
             yPosition = survivalTabContainer.isTabInFirstRow() ? mc.currentScreen.height / 2 - 111 : selected ? mc.currentScreen.height / 2 + 83 : mc.currentScreen.height / 2 + 79;
-            if (!mc.thePlayer.getActivePotionEffects().isEmpty()) xPosition += 60;
+            if (!mc.thePlayer.getActivePotionEffects().isEmpty())
+                xPosition += 60;
 
             int yTexPos = survivalTabContainer.isTabInFirstRow() ? selected ? 0 : 32 : selected ? 66 : 96;
             int xTexPos = id == 2 || id == 8 ? 0 : 28;
@@ -50,15 +52,16 @@ public class GuiSurvivalTab extends GuiButton
             mc.renderEngine.bindTexture(texture);
             drawTexturedModalRect(xPosition, yPosition, xTexPos, yTexPos, 28, ySize);
 
-            if (!survivalTabContainer.isTabInFirstRow() && selected) yPosition -= 3;
+            if (!survivalTabContainer.isTabInFirstRow() && selected)
+                yPosition -= 3;
 
             RenderHelper.enableGUIStandardItemLighting();
             zLevel = 100f;
             renderItem.zLevel = 100f;
             GL11.glEnable(2896);
             GL11.glEnable(32826);
-            renderItem.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, stackIcon, xPosition + 6, yPosition + 8);
-            renderItem.renderItemOverlayIntoGUI(mc.fontRenderer, mc.renderEngine, stackIcon, xPosition + 6, yPosition + 8);
+            renderItem.renderItemAndEffectIntoGUI(stackIcon, xPosition + 6, yPosition + 8);
+            renderItem.renderItemOverlayIntoGUI(mc.fontRendererObj, stackIcon, xPosition + 6, yPosition + 8, stackIcon.getDisplayName());
             GL11.glDisable(2896);
             GL11.glEnable(3042);
             renderItem.zLevel = 0f;
@@ -74,21 +77,22 @@ public class GuiSurvivalTab extends GuiButton
     {
         if (enabled && visible && mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height)
         {
-            if(mc.currentScreen.getClass() != survivalTabContainer.getSurvivalTab().getContainerGuiClass())
+            if (mc.currentScreen.getClass() != survivalTabContainer.getSurvivalTab().getContainerGuiClass())
             {
                 survivalTabContainer.getSurvivalTab().openContainerGui(mc.thePlayer);
                 return true;
             }
-            
+
             return false;
         }
 
-        else return false;
+        else
+            return false;
     }
 
     public void drawHoveringText(String text, int mouseX, int mouseY)
     {
-        drawHoveringText(Arrays.asList(text), mouseX, mouseY, Minecraft.getMinecraft().fontRenderer);
+        drawHoveringText(Arrays.asList(text), mouseX, mouseY, Minecraft.getMinecraft().fontRendererObj);
     }
 
     public void drawHoveringText(List text, int mouseX, int mouseY, FontRenderer font)
@@ -102,15 +106,18 @@ public class GuiSurvivalTab extends GuiButton
                 String s = (String) object;
                 int width = font.getStringWidth(s);
 
-                if (width > topWidth) topWidth = width;
+                if (width > topWidth)
+                    topWidth = width;
             }
 
             int renderX = mouseX + 12;
             int renderY = mouseY - 12;
             int i1 = 8;
 
-            if (text.size() > 1) i1 += 2 + (text.size() - 1) * 10;
-            if (renderX + topWidth > width) renderX -= 28 + topWidth;
+            if (text.size() > 1)
+                i1 += 2 + (text.size() - 1) * 10;
+            if (renderX + topWidth > width)
+                renderX -= 28 + topWidth;
 
             zLevel = 300f;
             renderItem.zLevel = 300f;
@@ -136,7 +143,8 @@ public class GuiSurvivalTab extends GuiButton
                 String s1 = (String) text.get(letterIndex);
                 font.drawStringWithShadow(s1, renderX, renderY, -1);
 
-                if (letterIndex == 0) renderY += 2;
+                if (letterIndex == 0)
+                    renderY += 2;
 
                 renderY += 10;
             }

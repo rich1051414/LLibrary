@@ -1,13 +1,14 @@
 package net.ilexiconn.llibrary.potion;
 
-import com.google.common.collect.Lists;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 
-import java.util.List;
-import java.util.Random;
+import com.google.common.collect.Lists;
 
 public class PotionBuilder
 {

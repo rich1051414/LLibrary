@@ -1,15 +1,17 @@
 package net.ilexiconn.llibrary.client.model.entity;
 
-import com.google.common.collect.Lists;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
+
 import net.ilexiconn.llibrary.client.render.IModelExtension;
 import net.ilexiconn.llibrary.client.render.RenderHelper;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
 import org.lwjgl.opengl.GL11;
 
-import java.util.List;
+import com.google.common.collect.Lists;
 
 @SideOnly(Side.CLIENT)
 public final class ModelLLibraryBiped extends ModelBiped
@@ -17,14 +19,17 @@ public final class ModelLLibraryBiped extends ModelBiped
     public ModelLLibraryBiped()
     {
         List<IModelExtension> extensions = RenderHelper.getModelExtensionsFor(ModelBiped.class);
-        if (extensions != null) for (IModelExtension extension : extensions) extension.init(this);
+        if (extensions != null)
+            for (IModelExtension extension : extensions)
+                extension.init(this);
     }
 
     public void render(Entity entity, float limbSwing, float limbSwingAmount, float rotationFloat, float rotationYaw, float rotationPitch, float partialTicks)
     {
         List<IModelExtension> modelExtensions = RenderHelper.getModelExtensionsFor(ModelBiped.class);
 
-        if (modelExtensions == null) modelExtensions = Lists.newArrayList();
+        if (modelExtensions == null)
+            modelExtensions = Lists.newArrayList();
 
         setRotationAngles(limbSwing, limbSwingAmount, rotationFloat, rotationYaw, rotationPitch, partialTicks, entity);
 

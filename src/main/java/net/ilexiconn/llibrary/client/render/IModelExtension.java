@@ -1,13 +1,13 @@
 package net.ilexiconn.llibrary.client.render;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.Entity;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Interface for rendering extra models to existing models.
- *
+ * 
  * @author Gegy1000
  */
 @SideOnly(Side.CLIENT)
@@ -15,14 +15,15 @@ public interface IModelExtension
 {
     /**
      * Initialize the custom model(s).
-     *
-     * @param model the parent model
+     * 
+     * @param model
+     *            the parent model
      */
     void init(ModelBase model);
 
     /**
      * Method to set the rotation angles for boxes before rendering.
-     *
+     * 
      * @param model
      * @param limbSwing
      * @param limbSwingAmount
@@ -36,18 +37,22 @@ public interface IModelExtension
 
     /**
      * Render method called before rendering the parent model.
-     *
-     * @param entity       the parent entity
-     * @param model        the parent model
+     * 
+     * @param entity
+     *            the parent entity
+     * @param model
+     *            the parent model
      * @param partialTicks
      */
     void preRender(Entity entity, ModelBase model, float partialTicks);
 
     /**
      * Render method called after rendering the parent model.
-     *
-     * @param entity       the parent entity
-     * @param model        the parent model
+     * 
+     * @param entity
+     *            the parent entity
+     * @param model
+     *            the parent model
      * @param partialTicks
      */
     void postRender(Entity entity, ModelBase model, float partialTicks);

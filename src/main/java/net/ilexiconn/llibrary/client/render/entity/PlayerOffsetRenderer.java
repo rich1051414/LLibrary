@@ -1,13 +1,15 @@
 package net.ilexiconn.llibrary.client.render.entity;
 
-import com.google.common.collect.Maps;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.Map;
+
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.Map;
+import com.google.common.collect.Maps;
 
 @SideOnly(Side.CLIENT)
 public class PlayerOffsetRenderer extends EntityRenderer
@@ -23,23 +25,25 @@ public class PlayerOffsetRenderer extends EntityRenderer
 
     public void updateCameraAndRender(float partialTick)
     {
-        if (mc.thePlayer == null || mc.thePlayer.isPlayerSleeping())
+        EntityPlayerSP player = mc.thePlayer;
+
+        if (player == null || player.isPlayerSleeping())
         {
             super.updateCameraAndRender(partialTick);
             return;
         }
 
-        Float offsetForPlayer = offsetY.get(mc.thePlayer);
+        Float offsetForPlayer = offsetY.get(player);
 
         if (offsetForPlayer == null)
         {
             offsetForPlayer = 1.62f;
-            offsetY.put(mc.thePlayer, 1.62f);
+            offsetY.put(player, 1.62f);
         }
 
-        mc.thePlayer.yOffset -= offsetForPlayer;
+        mc.setRenderViewEntity(new EntityCameraPlayer(player));
         super.updateCameraAndRender(partialTick);
-        mc.thePlayer.yOffset = 1.62f;
+        mc.setRenderViewEntity(player);
     }
 
     public void getMouseOver(float partialTick)

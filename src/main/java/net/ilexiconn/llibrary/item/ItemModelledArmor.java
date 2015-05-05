@@ -1,14 +1,13 @@
 package net.ilexiconn.llibrary.item;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemModelledArmor extends ItemArmor
 {
@@ -21,15 +20,14 @@ public class ItemModelledArmor extends ItemArmor
     {
         super(material, 4, armorType);
         setUnlocalizedName(receiver.getModelTextureName() + "_" + textureName);
-        setTextureName(textureName);
+        // setTextureName(textureName);
         armorModelReceiver = receiver;
     }
 
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        itemIcon = iconRegister.registerIcon(getIconString());
-    }
+    // public void registerIcons(IIconRegister iconRegister)
+    // {
+    // itemIcon = iconRegister.registerIcon(getIconString());
+    // }
 
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
     {
@@ -47,8 +45,10 @@ public class ItemModelledArmor extends ItemArmor
     public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, int armorSlot)
     {
         int type = ((ItemArmor) itemStack.getItem()).armorType;
-        if (type == 1 || type == 3) armorModel = armorModelReceiver.getArmorModel(0);
-        else armorModel = armorModelReceiver.getArmorModel(1);
+        if (type == 1 || type == 3)
+            armorModel = armorModelReceiver.getArmorModel(0);
+        else
+            armorModel = armorModelReceiver.getArmorModel(1);
 
         if (armorModel != null)
         {

@@ -1,13 +1,14 @@
 package net.ilexiconn.llibrary.config;
 
-import com.google.common.collect.Maps;
-import cpw.mods.fml.client.event.ConfigChangedEvent;
-import cpw.mods.fml.common.FMLCommonHandler;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
-
 import java.io.File;
 import java.util.Map;
+
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+
+import com.google.common.collect.Maps;
 
 public class ConfigHelper
 {
@@ -22,8 +23,10 @@ public class ConfigHelper
 
     public static ConfigContainer getConfigContainer(String modid)
     {
-        if (hasConfiguration(modid)) return configHandlers.get(modid);
-        else return null;
+        if (hasConfiguration(modid))
+            return configHandlers.get(modid);
+        else
+            return null;
     }
 
     public static boolean hasConfiguration(String modid)
@@ -33,7 +36,8 @@ public class ConfigHelper
 
     public static void setProperty(String modid, String category, String name, String value, Property.Type type)
     {
-        if (!hasConfiguration(modid)) return;
+        if (!hasConfiguration(modid))
+            return;
         getConfigContainer(modid).getConfiguration().getCategory(category).put(name, new Property(name, value, type));
         FMLCommonHandler.instance().bus().post(new ConfigChangedEvent.OnConfigChangedEvent(modid, "", false, false));
     }

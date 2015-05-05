@@ -25,4 +25,3 @@ public class AnimationComponent
 
     public String identifier;
 }
-
