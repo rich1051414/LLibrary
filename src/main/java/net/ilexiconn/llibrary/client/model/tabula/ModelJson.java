@@ -91,7 +91,7 @@ public class ModelJson extends MowzieModelBase
 
             if (playingAnimation != null)
             {
-                updateAnimation();
+                updateAnimation(entity);
             }
 
             if (animator != null)
@@ -161,7 +161,7 @@ public class ModelJson extends MowzieModelBase
         playingAnimation = null;
     }
 
-    public void updateAnimation()
+    public void updateAnimation(Entity entity)
     {
         for (Entry<String, ArrayList<AnimationComponent>> entry : playingAnimation.sets.entrySet())
         {
@@ -192,7 +192,7 @@ public class ModelJson extends MowzieModelBase
             }
         }
 
-        animationTimer++;
+        animationTimer = entity.ticksExisted % animationLength;
 
         if (animationTimer > animationLength)
         {
