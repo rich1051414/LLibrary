@@ -1,5 +1,7 @@
 package net.ilexiconn.llibrary.structure.util;
 
+import net.minecraft.util.BlockPos;
+
 /**
  * Stores all data needed for post-gen processing, specifically for custom 'hooks'
  * 
@@ -7,42 +9,25 @@ package net.ilexiconn.llibrary.structure.util;
  */
 public class BlockData
 {
-    private final int posX, posY, posZ, blockId, metadata, customData1, customData2;
+	private final BlockPos pos;
+    private final int blockId, customData1, customData2;
 
-    public BlockData(int x, int y, int z, int id, int meta, int data1, int data2)
+    public BlockData(BlockPos p, int id, int data1, int data2)
     {
-        posX = x;
-        posY = y;
-        posZ = z;
+    	pos = p;
         blockId = id;
-        metadata = meta;
         customData1 = data1;
         customData2 = data2;
     }
 
-    public final int getPosX()
+    public final BlockPos getPos()
     {
-        return this.posX;
-    }
-
-    public final int getPosY()
-    {
-        return this.posY;
-    }
-
-    public final int getPosZ()
-    {
-        return this.posZ;
+        return this.pos;
     }
 
     public final int getBlockID()
     {
         return this.blockId;
-    }
-
-    public final int getMetaData()
-    {
-        return this.metadata;
     }
 
     public final int getCustomData1()

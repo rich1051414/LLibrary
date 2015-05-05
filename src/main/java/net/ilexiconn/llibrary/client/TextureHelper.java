@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureUtil;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -37,17 +38,19 @@ public class TextureHelper
     private static final Minecraft mc = Minecraft.getMinecraft();
     private static final TextureManager renderEngine = mc.renderEngine;
 
+    private static final ResourceLocation locationStevePng = new ResourceLocation("textures/entity/steve.png");
+    
     public static BufferedImage getPlayerSkin(AbstractClientPlayer player)
     {
         BufferedImage bufferedImage = null;
         InputStream inputStream = null;
-        Map map = mc.func_152342_ad().func_152788_a(player.getGameProfile());
+        Map map = mc.getSkinManager().loadSkinFromCache(player.getGameProfile());
         ITextureObject texture;
 
         try
         {
             if (map.containsKey(Type.SKIN))
-                texture = renderEngine.getTexture(mc.func_152342_ad().func_152792_a((MinecraftProfileTexture) map.get(Type.SKIN), Type.SKIN));
+                texture = renderEngine.getTexture(mc.getSkinManager().loadSkin((MinecraftProfileTexture) map.get(Type.SKIN), Type.SKIN));
             else
                 texture = renderEngine.getTexture(player.getLocationSkin());
 
@@ -64,7 +67,7 @@ public class TextureHelper
             }
             else
             {
-                inputStream = mc.getResourceManager().getResource(AbstractClientPlayer.locationStevePng).getInputStream();
+                inputStream = mc.getResourceManager().getResource(locationStevePng).getInputStream();
                 bufferedImage = ImageIO.read(inputStream);
             }
         }
@@ -124,7 +127,7 @@ public class TextureHelper
 
         if (textureObject == null)
         {
-            textureObject = new ThreadDownloadImageData(null, String.format("http://skins.minecraft.net/MinecraftSkins/%s.png", StringUtils.stripControlCodes(player.getName())), AbstractClientPlayer.locationStevePng, new ImageBufferDownload());
+            textureObject = new ThreadDownloadImageData(null, String.format("http://skins.minecraft.net/MinecraftSkins/%s.png", StringUtils.stripControlCodes(player.getName())), locationStevePng, new ImageBufferDownload());
             renderEngine.loadTexture(player.getLocationSkin(), textureObject);
         }
 

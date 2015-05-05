@@ -6,9 +6,11 @@ import java.util.Random;
 
 import net.ilexiconn.llibrary.structure.util.BlockRotationData.Rotation;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.EnumFaceDirection;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
@@ -461,7 +463,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
 
                     if (removeStructure)
                     {
-                        if (!removeBlockAt(world, fakeID, realID, rotX, rotY, rotZ, rotations))
+                        if (!removeBlockAt(world, fakeID, realID, new BlockPos(rotX, rotY, rotZ), rotations))
                             return false;
                     }
                     else
@@ -475,7 +477,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
                         int customData2 = (blockArray[y][x][z].length > 3 ? blockArray[y][x][z][3] : 0);
                         int meta = (blockArray[y][x][z].length > 1 ? blockArray[y][x][z][1] : 0);
 
-                        setBlockAt(world, fakeID, realID, meta, customData1, customData2, rotX, rotY, rotZ);
+                        setBlockAt(world, fakeID, realID, meta, customData1, customData2, new BlockPos(rotX, rotY, rotZ));
                     }
                 }
             }
@@ -487,7 +489,7 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     /**
      * Handles setting block with fakeID at x/y/z in world. Arguments should be those retrieved from blockArray
      */
-    private void setBlockAt(World world, int fakeID, int realID, int meta, int customData1, int customData2, BlockPos pos)
+    private void setBlockAt(World world, int fakeID, int realID, int customData1, int customData2, BlockPos pos)
     {
         Block block = Block.getBlockById(realID);
 
@@ -496,21 +498,21 @@ public abstract class StructureGeneratorBase extends WorldGenerator
             if (BlockRotationData.getBlockRotationType(block) != null)
             {
                 int rotations = ((isOppositeAxis() ? structureFacing + 2 : structureFacing) + facing) % 4;
-                meta = GenHelper.getMetadata(rotations, block, meta);
+                meta = GenHelper.getMetadata(rotations, block);
             }
 
             if (BlockRotationData.getBlockRotationType(block) != null && (BlockRotationData.getBlockRotationType(block) == Rotation.WALL_MOUNTED || BlockRotationData.getBlockRotationType(block) == Rotation.LEVER))
             {
                 System.out.println("[LLibrary] Block " + block + " requires post-processing. Adding to list. Meta = " + meta);
-                postGenBlocks.add(new BlockData(x, y, z, fakeID, meta, customData1, customData2));
+                postGenBlocks.add(new BlockData(pos, fakeID, customData1, customData2));
             }
             else
             {
-                world.setBlock(x, y, z, block, meta, 2);
+                world.setBlockState(pos, block.getDefaultState(), 2);
                 if (BlockRotationData.getBlockRotationType(block) != null)
-                    GenHelper.setMetadata(world, x, y, z, meta);
+                    GenHelper.setMetadata(world, pos, meta);
                 if (Math.abs(fakeID) > 4095)
-                    onCustomBlockAdded(world, x, y, z, fakeID, customData1, customData2);
+                    onCustomBlockAdded(world, pos, fakeID, customData1, customData2);
             }
         }
     }
@@ -518,17 +520,17 @@ public abstract class StructureGeneratorBase extends WorldGenerator
     /**
      * Removes block at x/y/z and cleans up any items/entities that may be left behind Returns false if realID is mismatched with world's blockID at x/y/z
      */
-    private boolean removeBlockAt(World world, int fakeID, int realID, int x, int y, int z, int rotations)
+    private boolean removeBlockAt(World world, int fakeID, int realID, BlockPos pos, int rotations)
     {
         Block realBlock = Block.getBlockById(Math.abs(realID));
-        Block worldBlock = world.getBlock(x, y, z);
+        Block worldBlock = world.getBlockState(pos).getBlock();
 
         if (realBlock == null || worldBlock == null || (realID < 0 && worldBlock != realBlock))
             return true;
         else if (realBlock == worldBlock || GenHelper.materialsMatch(realBlock, worldBlock))
         {
-            world.setBlockToAir(x, y, z);
-            List<Entity> list = world.getEntitiesWithinAABB(Entity.class, GenHelper.getHangingEntityAxisAligned(x, y, z, Direction.directionToFacing[rotations]).expand(1f, 1f, 1f));
+            world.setBlockToAir(pos);
+            List<Entity> list = world.getEntitiesWithinAABB(Entity.class, GenHelper.getHangingEntityAxisAligned(pos, EnumFacing.values()[rotations]).expand(1f, 1f, 1f));
             for (Entity entity : list)
                 if (!(entity instanceof EntityPlayer))
                     entity.setDead();
