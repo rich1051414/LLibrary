@@ -1,6 +1,6 @@
 package net.ilexiconn.llibrary.common.message;
 
-import cpw.mods.fml.client.FMLClientHandler;
+//import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
@@ -12,7 +12,14 @@ public abstract class AbstractMessage<REQ extends AbstractMessage> implements IM
     {
         if (ctx.side.isClient())
         {
-            handleClientMessage(message, FMLClientHandler.instance().getClientPlayerEntity());
+            Object obj = null;
+            try {
+        	   obj = Class.forName("cpw.mods.fml.client.FMLClientHandler").getMethod("instance", new Class[0]).invoke(null, new Object[0]);
+        	   handleClientMessage(message, (EntityPlayer)obj.getClass().getMethod("getClientPlayerEntity", new Class[0]).invoke(obj, new Object[0]));
+	       } catch (Exception e) {
+		       // TODO Auto-generated catch block
+		       e.printStackTrace();
+	       }
         }
         else
         {
